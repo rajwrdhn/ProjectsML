@@ -11,8 +11,7 @@ import shutil
 import os
 
 class ScipyModel():
-    def __init__(self, log_basepath, regressor_suffix, **kwargs):
-        self.log_basepath = log_basepath
+    def __init__(self, regressor_suffix, **kwargs):
         self.suffix = regressor_suffix.upper()
 
         if self.suffix == 'LIN':

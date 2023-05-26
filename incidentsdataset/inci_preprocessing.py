@@ -7,7 +7,7 @@ from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 from scipy.sparse import save_npz
 
 def load_incident_dataset():
-    data = pd.read_csv('scipymodels/incidents.csv.gz', compression='gzip', na_values='?', parse_dates=[9,11,13,34,35], 
+    data = pd.read_csv('incidentsdataset/incidents.csv.gz', compression='gzip', na_values='?', parse_dates=[9,11,13,34,35], 
                        dayfirst=True, infer_datetime_format=True)
     data.drop_duplicates('number', keep='first', inplace=True)
     print("Add Target Columns...")
@@ -39,7 +39,7 @@ def load_incident_dataset():
     f.tight_layout(rect=[0.05, 0.05, 0.95, 0.95])
     
     plt.show()
-    data.to_csv('scipymodels/test_prep.csv')
+    data.to_csv('incidentsdataset/test_prep.csv')
     
     ct = ColumnTransformer(transformers = [
         #('num', StandardScaler(), ['temp','rain_1h','snow_1h']),
@@ -58,4 +58,4 @@ def load_incident_dataset():
 
 p = load_incident_dataset()
 
-save_npz('scipymodels/npz_incidents.csv', p)
+save_npz('incidentsdataset/npz_incidents.csv', p)
