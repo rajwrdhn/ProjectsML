@@ -16,8 +16,6 @@ class ScipyModel():
 
         if self.suffix == 'LIN':
             self.model = lin_models.LinearRegression(**kwargs)
-        elif self.suffix == 'LOG':
-            self.model = lin_models.LogisticRegression(**kwargs)
         elif self.suffix == 'CONST':
             self.model = sklearn.dummy.DummyRegressor(**kwargs)
         elif self.suffix == 'RF':
