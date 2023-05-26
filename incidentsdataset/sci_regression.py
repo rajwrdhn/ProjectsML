@@ -8,14 +8,33 @@ import argparse
 import os
 from datetime import datetime
 import time
+from math import sqrt
+
 
 def load_data():
-    data = load_npz('incidentsdataset/npz_incidents.csv.npz')
+    data = load_npz('/home/raj/Pictures/MLProjects/ProjectsML/incidentsdataset/npz_incidents.csv.npz')
     
     X = data[:,:-1].todense()
     y = data[:,-1].todense()
 
     return X, y
+
+def evaluate(model, X_test, y_test):
+    predicted = model.predict(X_test)
+    
+    mse = metrics.mean_squared_error(y_test, predicted)
+    mae = metrics.mean_absolute_error(y_test, predicted)
+    r2 = metrics.r2_score(y_test, predicted)
+    print('=== Result for ===')
+    print('MSE: ', mse)
+    print('RMSE:', sqrt(mse))
+    print('MAE: ', mae)
+    print('R2:  ', r2)
+    
+    prediction_df = pd.DataFrame(data={'truth': y_test.A1, 'predicted': predicted})
+    prediction_df.to_csv(os.path.join('predictions.csv'))
+        
+    return {'MSE': mse, 'RMSE': sqrt(mse), 'MAE': mae, 'R2': r2}
 
 def main():
     parser = argparse.ArgumentParser(description='Trains a regressor using either keras, or one of the existing linear models of scipy, prints evaluation metrics and plots the predictions.')
@@ -35,6 +54,8 @@ def main():
     
     starttime = time.time()
 
+    model.train(X_train, y_train)
+    res = evaluate(model, X_test, y_test)
 
 if __name__ == '__main__':
     main()

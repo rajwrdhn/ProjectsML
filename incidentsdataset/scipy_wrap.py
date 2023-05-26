@@ -26,3 +26,9 @@ class ScipyModel():
             self.model = SVR(epsilon=0.1, tol=0.0001, **kwargs)
         else:
             self.model = None
+
+    def train(self, X_train, y_train): 
+        self.model.fit(X_train, y_train.A1)
+    
+    def predict(self, X):
+        return self.model.predict(X)
