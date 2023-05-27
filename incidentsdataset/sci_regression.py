@@ -12,7 +12,7 @@ from math import sqrt
 
 
 def load_data():
-    data = load_npz('/home/raj/Pictures/MLProjects/ProjectsML/incidentsdataset/npz_incidents.csv.npz')
+    data = load_npz('incidentsdataset/npz_incidents.csv.npz')
     
     X = data[:,:-1].todense()
     y = data[:,-1].todense()
@@ -37,8 +37,8 @@ def evaluate(model, X_test, y_test):
     return {'MSE': mse, 'RMSE': sqrt(mse), 'MAE': mae, 'R2': r2}
 
 def main():
-    parser = argparse.ArgumentParser(description='Trains a regressor using either keras, or one of the existing linear models of scipy, prints evaluation metrics and plots the predictions.')
-    parser.add_argument('regressor', nargs='?', default='LIN', help='One of LIN, LOG, RF, SVR, or CONST, denoting the regressor to be used.')  
+    parser = argparse.ArgumentParser(description='Trains a regressor using one of the existing linear models of scipy, prints evaluation metrics for the predictions.')
+    parser.add_argument('regressor', nargs='?', default='LIN', help='One of LIN, RF, SVR, or CONST, denoting the regressor to be used.')  
     args = parser.parse_args()
     
     X, y = load_data()
