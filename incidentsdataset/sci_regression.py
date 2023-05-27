@@ -45,7 +45,7 @@ def main():
     
     X_train, X_test, y_train, y_test = train_test_split(X, y)
     
-    if args.regressor.upper() in ['LIN', 'LOG', 'CONST', 'RF', 'SVR']:
+    if args.regressor.upper() in ['LIN', 'CONST', 'RF', 'SVR']:
         import scipy_wrap
         model = scipy_wrap.ScipyModel(args.regressor)
     else:
