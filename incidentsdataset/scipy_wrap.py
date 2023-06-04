@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 import sklearn.linear_model as lin_models
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR, LinearSVR
@@ -26,7 +26,7 @@ class ScipyModel():
             self.model = None
 
     def train(self, X_train, y_train): 
-        self.model.fit(X_train, y_train.A1)
+        self.model.fit(np.asarray(X_train), np.asarray(y_train).ravel())
     
     def predict(self, X):
-        return self.model.predict(X)
+        return self.model.predict(np.asarray(X))

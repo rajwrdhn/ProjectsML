@@ -1,7 +1,10 @@
 import pandas as pd
+import numpy as np
 
 from sklearn.model_selection import train_test_split
 import sklearn.metrics as metrics
+
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 from scipy.sparse import load_npz
 import argparse
@@ -12,7 +15,7 @@ from math import sqrt
 
 
 def load_data():
-    data = load_npz('incidentsdataset/npz_incidents.csv.npz')
+    data = load_npz('./npz_incidents.csv.npz')
     
     X = data[:,:-1].todense()
     y = data[:,-1].todense()
@@ -20,19 +23,16 @@ def load_data():
     return X, y
 
 def evaluate(model, X_test, y_test):
-    predicted = model.predict(X_test)
+    predicted = model.predict(np.asarray(X_test))
     
-    mse = metrics.mean_squared_error(y_test, predicted)
-    mae = metrics.mean_absolute_error(y_test, predicted)
-    r2 = metrics.r2_score(y_test, predicted)
+    mse = mean_squared_error(np.asarray(y_test), np.asarray(predicted))
+    mae = mean_absolute_error(np.asarray(y_test), np.asarray(predicted))
+    r2 = r2_score(np.asarray(y_test), np.asarray(predicted))
     print('=== Result for ===')
     print('MSE: ', mse)
     print('RMSE:', sqrt(mse))
     print('MAE: ', mae)
     print('R2:  ', r2)
-    
-    prediction_df = pd.DataFrame(data={'truth': y_test.A1, 'predicted': predicted})
-    prediction_df.to_csv(os.path.join('predictions.csv'))
         
     return {'MSE': mse, 'RMSE': sqrt(mse), 'MAE': mae, 'R2': r2}
 
