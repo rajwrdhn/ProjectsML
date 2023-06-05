@@ -7,7 +7,8 @@ from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
+from math import sqrt
 
 def preprocess():
     df = pd.read_csv("hcv.csv")
@@ -34,9 +35,23 @@ def preprocess():
     model = LinearRegression()
     model.fit(X_train, y_train)
     # evaluate the model
+    evaluate(model, X_test, y_test)
     yhat = model.predict(X_test)
-    # evaluate predictions
-    mae = mean_absolute_error(y_test, yhat)
-    print('MAE: %.3f' % mae)
 
-preprocess()
+def evaluate(model, X_test, y_test):
+    predicted = model.predict(X_test)
+    
+    mse = mean_squared_error(y_test, predicted)
+    mae = mean_absolute_error(y_test, predicted)
+    r2 = r2_score(y_test, predicted)
+    print('=== Result for ===')
+    print('MSE: ', mse)
+    print('RMSE:', sqrt(mse))
+    print('MAE: ', mae)
+    print('R2:  ', r2)
+        
+    return {'MSE': mse, 'RMSE': sqrt(mse), 'MAE': mae, 'R2': r2}
+
+
+if __name__ == '__main__':
+    preprocess()
