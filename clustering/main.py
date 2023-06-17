@@ -20,7 +20,7 @@ print(df)
 data = df.values
 
 # define the model
-model = AgglomerativeClustering(n_clusters=30)
+model = AgglomerativeClustering(n_clusters=3)
 # fit model and predict clusters
 yhat = model.fit_predict(data)
 # retrieve unique clusters
