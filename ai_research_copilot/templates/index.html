@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Research Copilot</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 800px; margin: auto; }
+        textarea { width: 100%; height: 80px; }
+        button { padding: 10px 20px; margin-top: 10px; }
+        .papers { margin-top: 20px; }
+        .result { background: #f4f4f4; padding: 15px; margin-top: 20px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔬 AI Research Copilot</h1>
+    <form method="POST">
+        <textarea name="query" placeholder="Ask about latest research...">{{ query }}</textarea><br>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if papers %}
+    <div class="papers">
+        <h3>📚 Retrieved Papers</h3>
+        <ul>
+        {% for paper in papers %}
+            <li><a href="{{ paper.link }}" target="_blank">{{ paper.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if result %}
+    <div class="result">
+        <h3>🤖 AI Copilot Insights</h3>
+        <p>{{ result }}</p>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
