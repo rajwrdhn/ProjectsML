@@ -14,6 +14,9 @@ def build_rag_chain(papers):
         for chunk in text_splitter.split_text(paper["abstract"]):
             docs.append(chunk)
 
+    if not docs:
+        raise ValueError("No documents to build the RAG chain.")
+
     embeddings = HuggingFaceEmbeddings(model="thenlper/gte-large")
     vectorstore = Chroma.from_texts(docs, embedding=embeddings)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
