@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommender</title>
+</head>
+<body>
+    <h1>Movie Recommender</h1>
+    <form id="search-form">
+        <input type="text" name="prompt" placeholder="Enter genres or description" required>
+        <input type="number" name="top_k" value="5" min="1" max="20">
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Results:</h2>
+    <ul id="results"></ul>
+
+    <script>
+        const form = document.getElementById("search-form");
+        const resultsEl = document.getElementById("results");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            resultsEl.innerHTML = "<li>Loading...</li>";
+
+            const formData = new FormData(form);
+            const params = new URLSearchParams(formData);
+
+            const res = await fetch(`/search?${params.toString()}`);
+            const data = await res.json();
+
+            resultsEl.innerHTML = "";
+            if (data.results && data.results.length > 0) {
+                data.results.forEach(movie => {
+                    const li = document.createElement("li");
+                    li.textContent = `${movie.title} (${movie.year}) - ${movie.genres} - Rating: ${movie.average_rating}`;
+                    resultsEl.appendChild(li);
+                });
+            } else {
+                resultsEl.innerHTML = "<li>No results found</li>";
+            }
+        });
+    </script>
+</body>
+</html>

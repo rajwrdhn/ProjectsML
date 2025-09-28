@@ -88,11 +88,13 @@ orjson==3.11.3
 overrides==7.7.0
 packaging==25.0
 pandas==2.3.2
+pgvector==0.4.1
 pillow==11.3.0
 posthog==5.4.0
 propcache==0.3.2
 proto-plus==1.26.1
 protobuf==6.32.1
+psycopg2-binary==2.9.10
 pyarrow==21.0.0
 pyasn1==0.6.1
 pyasn1_modules==0.4.2
